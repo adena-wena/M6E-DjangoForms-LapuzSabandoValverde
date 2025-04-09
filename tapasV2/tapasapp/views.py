@@ -19,6 +19,10 @@ def basic_list(request, pk):
     a = get_object_or_404(Account, pk=pk)
     return render(request, 'tapasapp/basic_list.html', {'a':a})
 
+def delete_account(request, pk):
+    Account.objects.filter(pk=pk).delete()
+    return redirect('better_list')
+
 def add_menu(request):
     if(request.method=="POST"):
         dishname = request.POST.get('dname')

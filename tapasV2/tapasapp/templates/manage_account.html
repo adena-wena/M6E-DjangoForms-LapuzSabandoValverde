@@ -1,3 +1,7 @@
+<button> Change Password</button>
+<button> Back</button>
+<button> Delete Account</button>
+
 {% extends 'tapasapp/base.html' %}
 {% load static %}
 
@@ -16,8 +20,9 @@
             </p>
            
             <p>
-                <a href="{% url 'manage_account' pk=a.pk %}"  class="btn btn-success">Manage</a>
-                <a href="{% url 'delete_account' pk=d.pk %}"  class="btn btn-danger">Delete</a>
+                <a href="{% url 'change_password' pk=a.pk %}"  class="btn btn-success">Change Password</a>
+                <a href="{% url 'basic_list' pk=a.pk %}"  class="btn btn-warning">Back</a>
+                <a href="{}"  class="btn btn-danger">Delete Account</a>
 
             </p>
             
