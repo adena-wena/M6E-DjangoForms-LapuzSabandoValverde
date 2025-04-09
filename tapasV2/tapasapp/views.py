@@ -69,3 +69,7 @@ def signup(request):
             Account.objects.create(username=uname, password=pword)
             return render(request, 'tapasapp/login.html', {'success': True})
     return render(request, 'tapasapp/signup.html')
+
+
+def basic_list(request, pk):
+    user = get_object_or_404(Account, pk=pk)
