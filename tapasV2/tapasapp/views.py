@@ -15,6 +15,10 @@ def better_list(request):
     dish_objects = Dish.objects.all()
     return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})
 
+def basic_list(request, pk):
+    a = get_object_or_404(Account, pk=pk)
+    return render(request, 'tapasapp/basic_list.html', {'a':a})
+
 def add_menu(request):
     if(request.method=="POST"):
         dishname = request.POST.get('dname')
