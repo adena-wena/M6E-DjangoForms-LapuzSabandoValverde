@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
+from django.contrib import messages  # type: ignore
 from .models import Dish, Account
 
 # Create your views here.
@@ -49,11 +50,12 @@ def login(request):
         try:
             account = Account.objects.get(username=uname)
             if account.password == pword:
+                request.session['account_id'] = account.pk
                 return redirect('better_list')
             else:
-                return render(request, 'tapasapp/login.html', {'error': True})
+                messages.error(request, "Invalid login. Please try again.")
         except Account.DoesNotExist:
-            return render(request, 'tapasapp/login.html', {'error': True})
+            messages.error(request, "Invalid login. Please try again.")
     return render(request, 'tapasapp/login.html')
 
 def signup(request):
@@ -62,14 +64,11 @@ def signup(request):
         pword = request.POST.get('pword')
         confirm_pword = request.POST.get('confirm_pword')
         if pword != confirm_pword:
-            return render(request, 'tapasapp/signup.html', {'error': "Passwords do not match"})
+            messages.error(request, "Passwords do not match")
         elif Account.objects.filter(username=uname).exists():
-            return render(request, 'tapasapp/signup.html', {'error': "Account already exists"})
+            messages.error(request, "Account already exists")
         else:
             Account.objects.create(username=uname, password=pword)
-            return render(request, 'tapasapp/login.html', {'success': True})
+            messages.success(request, "Account created successfully!")
+            return redirect('login')
     return render(request, 'tapasapp/signup.html')
-
-
-def basic_list(request, pk):
-    user = get_object_or_404(Account, pk=pk)

@@ -8,18 +8,14 @@
                             <div class="card-body p-4">
                                 <h2 class="text-center mb-3">Join Us!</h2>
                                 <h5 class="text-center text-muted mb-4">Create your account</h5>
-                                {% if error %}
-                                    <div class="alert alert-danger text-center" role="alert">
-                                        {{ error }}
-                                    </div>
+                                
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    <div class="alert alert-info text-center">{{ message }}</div>
+                                    {% endfor %}
                                 {% endif %}
 
-                                {% if success %}
-                                    <div class="alert alert-success text-center" role="alert">
-                                        Account created successfully!
-                                    </div>
-                                {% endif %}
-                                <form method="POST" action="{% url 'signup' %}">
+                                <form method="POST">
                                     {% csrf_token %}
                                     
                                     <div class="mb-3">
