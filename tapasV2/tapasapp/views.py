@@ -94,8 +94,6 @@ def signup(request):
     return render(request, 'tapasapp/signup.html')
 
 def change_password(request, pk):
-    if 'user_id' not in request.session or request.session['user_id'] != pk:
-        return redirect('login')
     
     account = Account.objects.get(pk=pk)
 
@@ -114,7 +112,7 @@ def change_password(request, pk):
         else:
             account.password = new1  
             account.save()
-            messages.success(request, 'Password updated successfully.')
             return redirect('manage_account', pk=pk)
     
     return render(request, 'tapasapp/change_password.html', {'account': account})
+
