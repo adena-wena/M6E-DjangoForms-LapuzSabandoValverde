@@ -11,9 +11,9 @@
         </div>
         <div class="card-body">
 
-            <h2> {{a.uname}} </h2>
+            <h2> {{account.uname}} </h2>
             <p>
-                Password: {{a.pword}}
+                Password: {{account.pword}}
             </p>
            
             <p>
@@ -21,7 +21,7 @@
          
                     <a href="{% url 'better_list' %}"  class="btn btn-warning">Back</a>
   
-                <a href="{}"  class="btn btn-danger">Delete Account</a>
+                <a href="{%url 'delete_account' pk=account.pk %}"  class="btn btn-danger">Delete Account</a>
 
             </p>
             
