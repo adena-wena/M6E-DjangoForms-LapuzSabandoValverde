@@ -92,3 +92,26 @@ def signup(request):
             messages.success(request, "Account created successfully!")
             return redirect('login')
     return render(request, 'tapasapp/signup.html')
+
+def change_password(request, pk):
+    account = get_object_or_404(Account, pk=pk)
+
+    if request.method == "POST":
+        if 'cancel' in request.POST:
+            return redirect('manage_account')  
+
+        current_pword = request.POST.get('current_password')
+        new_pword = request.POST.get('new_password')
+        confirm_new_pword = request.POST.get('confirm_new_password')
+
+        if account.password != current_pword:
+            messages.error(request, "Current password is incorrect.")
+        elif new_pword != confirm_new_pword:
+            messages.error(request, "New passwords do not match.")
+        else:
+            account.password = new_pword
+            account.save()
+            messages.success(request, "Password updated successfully!")
+            return redirect('manage_account')  
+
+    return render(request, 'tapasapp/change_password.html', {'account': account})

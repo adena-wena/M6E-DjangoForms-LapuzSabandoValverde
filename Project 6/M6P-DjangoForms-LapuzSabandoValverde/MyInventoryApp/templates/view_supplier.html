@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-4">
+  <h3 class="mb-4 text-center">Suppliers</h3>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for s in supplier %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-2">{{ s.name }}</h5>
+          <p class="mb-1"><strong>City:</strong> {{ s.city }}</p>
+          <p class="mb-1"><strong>Country:</strong> {{ s.country }}</p>
+          <p class="mb-1"><strong>Created at:</strong> {{ s.created_at }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

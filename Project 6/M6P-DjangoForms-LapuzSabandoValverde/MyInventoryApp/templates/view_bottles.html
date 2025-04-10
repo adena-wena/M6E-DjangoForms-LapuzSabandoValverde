@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-4">
+  <h3 class="mb-4 text-center">Water Bottles</h3>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for b in bottles %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-2">{{ b.brand }} <span class="badge bg-secondary">{{ b.sku }}</span></h5>
+          <p class="mb-1"><strong>Cost:</strong> ₱{{ b.cost }}</p>
+          <p class="mb-1"><strong>Size:</strong> {{ b.size }}</p>
+          <p class="mb-1"><strong>Mouth Size:</strong> {{ b.mouth_size }}</p>
+          <p class="mb-1"><strong>Color:</strong> {{ b.color }}</p>
+          <p class="mb-1"><strong>Supplier:</strong> {{ b.supplier }}</p>
+          <p class="mb-3"><strong>In Stock:</strong> <span class="badge bg-success">{{ b.current_quantity }}</span></p>
+          <a href="{% url 'view_bottle_details' pk=b.pk %}" class="btn btn-outline-primary w-100">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

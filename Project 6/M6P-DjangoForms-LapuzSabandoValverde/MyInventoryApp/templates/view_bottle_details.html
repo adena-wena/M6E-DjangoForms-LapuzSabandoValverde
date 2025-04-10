@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5 mt-5">
+      <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+          <h5 class="card-title text-center text-primary fw-bold my-2">Water Bottle Details</h5>
+
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              <strong>SKU:</strong> 
+              <span class="badge bg-secondary">{{ b.sku }}</span>
+            </li>
+            <li class="list-group-item">
+              <strong>Brand:</strong> {{ b.brand }}
+            </li>
+            <li class="list-group-item">
+              <strong>Cost:</strong> ₱{{ b.cost }}
+            </li>
+            <li class="list-group-item">
+              <strong>Size:</strong> {{ b.size }}
+            </li>
+            <li class="list-group-item">
+              <strong>Mouth Size:</strong> {{ b.mouth_size }}
+            </li>
+            <li class="list-group-item">
+              <strong>Color:</strong> {{ b.color }}
+            </li>
+            <li class="list-group-item">
+              <strong>Supplier:</strong> {{ b.supplier }}
+            </li>
+            <li class="list-group-item">
+              <strong>Quantity in Stock:</strong> 
+              <span class="badge bg-info text-dark">{{ b.current_quantity }}</span>
+            </li>
+          </ul>
+
+          <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'delete_bottle' pk=b.pk %}" class="btn btn-outline-danger w-45">Delete</a>
+            <a href="{% url 'view_bottles' %}" class="btn btn-outline-secondary w-45">Back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
