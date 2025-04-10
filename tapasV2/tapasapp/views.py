@@ -98,20 +98,23 @@ def change_password(request, pk):
         return redirect('login')
     
     account = Account.objects.get(pk=pk)
-    
+
     if request.method == 'POST':
+        if 'cancel' in request.POST:
+            return redirect('manage_account', pk=pk)
+
         current = request.POST.get('current_password')
         new1 = request.POST.get('new_password')
-        new2 = request.POST.get('confirm_password')
+        new2 = request.POST.get('confirm_password') 
 
-        if account.password != current_pword:
-            messages.error(request, "Current password is incorrect.")
-        elif new_pword != confirm_new_pword:
-            messages.error(request, "New passwords do not match.")
+        if current != account.getPassword():  
+            messages.error(request, 'Current password is incorrect.')
+        elif new1 != new2:
+            messages.error(request, 'New passwords do not match.')
         else:
-            account.password = new_pword
+            account.password = new1  
             account.save()
-            messages.success(request, "Password updated successfully!")
-            return redirect('manage_account', pk=account.pk)
-
+            messages.success(request, 'Password updated successfully.')
+            return redirect('manage_account', pk=pk)
+    
     return render(request, 'tapasapp/change_password.html', {'account': account})
