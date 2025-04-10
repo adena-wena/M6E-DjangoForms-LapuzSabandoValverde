@@ -5,23 +5,31 @@ from .models import Dish, Account
 # Create your views here.
 
 
-def login(request):
-    return render(request, 'tapasapp/login.html')
 
-def signup(request):
-    return render(request, 'tapasapp/signup.html')
 
 def better_list(request):
     dish_objects = Dish.objects.all()
-    return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})
+    account = None
+
+    account_id = request.session.get('account_id')
+    if account_id:
+        try:
+            account = Account.objects.get(pk=account_id)
+        except:
+            pass
+    return render(request, 'tapasapp/better_list.html', {'dishes': dish_objects, 'account': account})
+
+
+    return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects, 'account': account})
 
 # def basic_list(request, pk):
 #     a = get_object_or_404(Account, pk=pk)
 #     return render(request, 'tapasapp/basic_list.html', {'a':a})
 
 def manage_account(request, pk):
-    a = get_object_or_404(Account, pk=pk)
-    return render(request, 'tapasapp/manage_account.html', {'a':a})
+    account = get_object_or_404(Account, pk=pk)
+
+    return render(request, 'tapasapp/manage_account.html', {'account': account})
 
 def delete_account(request, pk):
     Account.objects.filter(pk=pk).delete()
