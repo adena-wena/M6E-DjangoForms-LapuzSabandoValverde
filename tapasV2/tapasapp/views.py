@@ -94,15 +94,15 @@ def signup(request):
     return render(request, 'tapasapp/signup.html')
 
 def change_password(request, pk):
-    account = get_object_or_404(Account, pk=pk)
-
-    if request.method == "POST":
-        if 'cancel' in request.POST:
-            return redirect('manage_account')  
-
-        current_pword = request.POST.get('current_password')
-        new_pword = request.POST.get('new_password')
-        confirm_new_pword = request.POST.get('confirm_new_password')
+    if 'user_id' not in request.session or request.session['user_id'] != pk:
+        return redirect('login')
+    
+    account = Account.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        current = request.POST.get('current_password')
+        new1 = request.POST.get('new_password')
+        new2 = request.POST.get('confirm_password')
 
         if account.password != current_pword:
             messages.error(request, "Current password is incorrect.")
