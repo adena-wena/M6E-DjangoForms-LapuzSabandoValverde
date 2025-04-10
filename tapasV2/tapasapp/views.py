@@ -112,6 +112,6 @@ def change_password(request, pk):
             account.password = new_pword
             account.save()
             messages.success(request, "Password updated successfully!")
-            return redirect('manage_account')  
+            return redirect('manage_account', pk=account.pk)
 
     return render(request, 'tapasapp/change_password.html', {'account': account})
