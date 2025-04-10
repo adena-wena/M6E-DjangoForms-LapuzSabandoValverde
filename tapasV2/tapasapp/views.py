@@ -15,9 +15,13 @@ def better_list(request):
     dish_objects = Dish.objects.all()
     return render(request, 'tapasapp/better_list.html', {'dishes':dish_objects})
 
-def basic_list(request, pk):
+# def basic_list(request, pk):
+#     a = get_object_or_404(Account, pk=pk)
+#     return render(request, 'tapasapp/basic_list.html', {'a':a})
+
+def manage_account(request, pk):
     a = get_object_or_404(Account, pk=pk)
-    return render(request, 'tapasapp/basic_list.html', {'a':a})
+    return render(request, 'tapasapp/manage_account.html', {'a':a})
 
 def delete_account(request, pk):
     Account.objects.filter(pk=pk).delete()
