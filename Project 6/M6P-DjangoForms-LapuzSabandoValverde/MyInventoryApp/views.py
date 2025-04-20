@@ -40,7 +40,7 @@ def add_bottle(request):
             supplier=supplier,
             current_quantity=current_qty
         )        
-        return redirect('MyInventoryApp/view_bottles')
+        return redirect('MyInventoryApp/view_bottles.html')
     else:
         supplier_objects = Supplier.objects.all()
         return render(request, 'MyInventoryApp/add_bottle.html', {'supplier': supplier_objects})
