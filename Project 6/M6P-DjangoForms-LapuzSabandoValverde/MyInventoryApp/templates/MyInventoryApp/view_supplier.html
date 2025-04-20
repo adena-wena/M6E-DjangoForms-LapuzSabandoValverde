@@ -23,7 +23,7 @@
   <div class="btn-group" role="group">
    <a href="{% url 'add_bottle/'%}"class="btn btn-outline-primary btn-lg">Add Bottle</a>
    {% if user %}
-   <a href="{% url 'manage_account' pk=user.pk %}" class="btn btn-outline-primary btn-lg">Manage Account</a>
+   <a href="{% url 'manage_account' user.pk %}" class="btn btn-outline-primary btn-lg">Manage Account</a>
    {% endif %}
    <a href="{% url 'login'%}" class="btn btn-outline-primary btn-lg">Logout</a>
     </div>
