@@ -28,10 +28,12 @@
           <h3 class="text-center mb-3">Login</h3>
 
           {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-success">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
 
           <form method="post">
             {% csrf_token %}
