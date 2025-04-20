@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
@@ -53,14 +54,16 @@ def base(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        try:
-            user = Account.objects.get(username=username, password=password)
-            return redirect('view_supplier')
-        except Account.DoesNotExist:
-            messages.error(request, "Invalid login")
-            return render(request, 'MyInventoryApp/login.html')
+        user = authenticate(request, username=username, password=password)
 
-    return render(request, 'MyInventoryApp/base.html')
+        if user is not None:
+            login(request, user)
+            return redirect('view_supplier') 
+        else:
+            messages.error(request, 'Invalid login')
+            return render(request, 'base.html')  
+
+    return render(request, 'base.html')
 
 
 def signup(request):
