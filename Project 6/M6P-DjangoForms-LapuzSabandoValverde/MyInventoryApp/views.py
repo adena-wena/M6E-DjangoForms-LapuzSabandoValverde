@@ -65,14 +65,14 @@ def base(request):
 
 def signup(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        uname = request.POST.get('uname')
+        pword = request.POST.get('pword')
 
-        if User.objects.filter(username=username).exists():
-            messages.warning(request, 'Account already exists')
+        if Account.objects.filter(username=uname).exists():
+            messages.error(request, 'Account already exists')
             return render(request, 'signup.html')
         else:
-            User.objects.create_user(username=username, password=password)
+            Account.objects.create_user(username=uname, password=pword)
             messages.success(request, 'Account created successfully')
             return redirect('base')  
 
