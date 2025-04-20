@@ -25,5 +25,7 @@ urlpatterns = [
     path('view_bottles', views.view_bottles, name='view_bottles'),
     path('view_bottle_details/<int:pk>/', views.view_bottle_details, name= 'view_bottle_details'),
     path('delete_bottle/<int:pk>/', views.delete_bottle, name='delete_bottle'),
+    path('manage_account/<int:pk>/', views.manage_account, name='manage_account'),
+    path('delete_account/<int:pk>/', views.delete_account, name='delete_account'),
     path('add_bottle', views.add_bottle, name='add_bottle'),
 ]
