@@ -50,11 +50,11 @@ def delete_bottle(request, pk):
 
 def base(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        uname = request.POST.get('uname')
+        pword = request.POST.get('pword')
 
         try:
-            user = Account.objects.get(username=username, password=password)
+            account = Account.objects.get(username=uname, password=pword)
             return redirect('view_supplier')
         except Account.DoesNotExist:
             messages.error(request, "Invalid login")
@@ -68,15 +68,15 @@ def signup(request):
         uname = request.POST.get('uname')
         pword = request.POST.get('pword')
 
-        if Account.objects.filter(username=uname).exists():
-            messages.error(request, 'Account already exists')
-            return render(request, 'MyInventoryApp/signup.html')
-        else:
-            Account.objects.create_user(username=uname, password=pword)
-            messages.success(request, 'Account created successfully')
-            return redirect('MyInventoryApp/base')  
-
-    return render(request, 'MyInventoryApp/signup.html')
+        # if Account.objects.filter(username=uname).exists():
+        #     messages.error(request, 'Account already exists')
+        #     return render(request, 'MyInventoryApp/signup.html')
+        # else:
+        Account.objects.create(username=uname, password=pword)
+        messages.success(request, 'Account created successfully')
+        return redirect('MyInventoryApp/base')  
+    else:
+        return render(request, 'MyInventoryApp/signup.html')
 
 def manage_account(request, pk):
     account = get_object_or_404(Account, pk=pk)
