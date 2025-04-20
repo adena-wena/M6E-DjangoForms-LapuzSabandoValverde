@@ -19,6 +19,8 @@ from django.urls import path # type: ignore
 from .import views
 
 urlpatterns = [
+    path('', views.base, name='base'),  
+    path('signup/', views.signup, name='signup'),
     path('view_supplier', views.view_supplier, name='view_supplier'),
     path('view_bottles', views.view_bottles, name='view_bottles'),
     path('view_bottle_details/<int:pk>/', views.view_bottle_details, name= 'view_bottle_details'),
