@@ -46,3 +46,25 @@ def add_bottle(request):
 def delete_bottle(request, pk):
     WaterBottle.objects.filter(pk=pk).delete()
     return redirect('view_bottles')
+
+def base(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = Account.objects.get(username=username, password=password)
+            return redirect('view_supplier')
+        except Account.DoesNotExist:
+            messages.error(request, "Invalid login")
+            return render(request, 'login.html')
+
+    return render(request, 'base.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+    return render(request, 'signup.html')
