@@ -36,12 +36,12 @@
           <form method="post">
             {% csrf_token %}
             <div class="mb-3">
-              <label class="form-label">Username</label>
-              <input type="text" class="form-control" name="username" required>
+              <label for = 'uname' class="form-label">Username</label>
+              <input type="text" class="form-control" name="uname" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" class="form-control" name="password" required>
+              <label for = 'pword' class="form-label">Password</label>
+              <input type="password" class="form-control" name="pword" required>
             </div>
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-primary">Login</button>
