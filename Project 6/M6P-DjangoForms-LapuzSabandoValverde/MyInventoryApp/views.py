@@ -50,15 +50,15 @@ def delete_bottle(request, pk):
 
 def base(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        uname = request.POST.get('uname')
+        pword = request.POST.get('pword')
 
         try:
-            user = Account.objects.get(username=username, password=password)
-            return redirect('view_supplier')
+            user = Account.objects.get(username=uname, password=pword)
+            return redirect('MyInventoryApp/view_supplier.html')
         except Account.DoesNotExist:
             messages.error(request, "Invalid login")
-            return render(request, 'MyInventoryApp/login.html')
+            return render(request, 'MyInventoryApp/base.html')
 
     return render(request, 'MyInventoryApp/base.html')
 
@@ -70,11 +70,11 @@ def signup(request):
 
         if Account.objects.filter(username=uname).exists():
             messages.error(request, 'Account already exists')
-            return render(request, 'MyInventoryApp/signup.html')
+            
         else:
-            Account.objects.create_user(username=uname, password=pword)
+            Account.objects.create(username=uname, password=pword)
             messages.success(request, 'Account created successfully')
-            return redirect('MyInventoryApp/base')  
+            return redirect('MyInventoryApp/base.html')  
 
     return render(request, 'MyInventoryApp/signup.html')
 
