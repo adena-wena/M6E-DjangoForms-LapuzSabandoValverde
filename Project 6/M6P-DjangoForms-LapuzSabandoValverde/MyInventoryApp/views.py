@@ -76,7 +76,7 @@ def signup(request):
             messages.success(request, 'Account created successfully')
             return redirect('base')  
 
-    return render(request, 'signup.html')
+    return render(request, 'MyInventoryApp/signup.html')
 
 def manage_account(request, pk):
     account = get_object_or_404(Account, pk=pk)
@@ -84,4 +84,4 @@ def manage_account(request, pk):
 
 def delete_account(request, pk ):
     Account.objects.filter(pk=pk).delete()
-    return redirect('signup.html')
+    return redirect('MyInventoryApp/signup.html')
