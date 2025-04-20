@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
-from django.contrib import messages
+from django.contrib import messages # type: ignore
 from django.contrib.auth import authenticate, login
 # Create your views here.
 
@@ -49,7 +49,7 @@ def delete_bottle(request, pk):
     WaterBottle.objects.filter(pk=pk).delete()
     return redirect('view_bottles')
 
-def base(request):
+def login(request):
     if request.method == 'POST':
         uname = request.POST.get('uname')
         pword = request.POST.get('pword')
@@ -69,7 +69,7 @@ def base(request):
             messages.error(request, 'Invalid login')
             return render(request, 'base.html')  
 
-    return render(request, 'base.html')
+    return render(request, 'login.html')
 
 
 def signup(request):
@@ -88,8 +88,8 @@ def signup(request):
     return render(request, 'MyInventoryApp/signup.html')
 
 def manage_account(request, pk):
-    account = get_object_or_404(Account, pk=pk)
-    return render(request, 'MyInventoryApp/manage_account.html', {'account': account})
+    user = get_object_or_404(Account, pk=pk)
+    return render(request, 'MyInventoryApp/manage_account.html', {'user': user})
 
 def delete_account(request, pk ):
     Account.objects.filter(pk=pk).delete()
