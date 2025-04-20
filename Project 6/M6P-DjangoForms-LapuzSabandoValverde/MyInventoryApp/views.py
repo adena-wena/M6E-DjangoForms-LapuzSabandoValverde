@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages # type: ignore
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login # type: ignore
 # Create your views here.
 
 
@@ -56,20 +56,27 @@ def login(request):
 
         try:
             user = Account.objects.get(username=uname, password=pword)
-            return redirect('MyInventoryApp/view_supplier.html')
+            if user.password == pword:
+                request.session['account_id'] = user.pk
+                return redirect('MyInventoryApp/view_supplier')
+            else:
+                messages.error(request, "Invalid login. Please try again.")
         except Account.DoesNotExist:
-            messages.error(request, "Invalid login")
-            return render(request, 'MyInventoryApp/base.html')
-        user = authenticate(request, username=username, password=password)
+            messages.error(request, "Invalid login. Please try again.")
+        #     return redirect('MyInventoryApp/view_supplier.html')
+        # except Account.DoesNotExist:
+        #     messages.error(request, "Invalid login")
+        #     return render(request, 'MyInventoryApp/login.html')
+        # user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return redirect('view_supplier') 
-        else:
-            messages.error(request, 'Invalid login')
-            return render(request, 'base.html')  
+        # if user is not None:
+        #     login(request, user)
+        #     return redirect('view_supplier') 
+        # else:
+        #     messages.error(request, 'Invalid login')
+        #     return render(request, 'base.html')  
 
-    return render(request, 'login.html')
+    return render(request, 'MyInventoryApp/login.html')
 
 
 def signup(request):
