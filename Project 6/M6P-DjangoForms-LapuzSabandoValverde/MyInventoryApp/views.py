@@ -58,7 +58,7 @@ def login(request):
             user = Account.objects.get(username=uname, password=pword)
             if user.password == pword:
                 request.session['account_id'] = user.pk
-                return redirect('MyInventoryApp/view_supplier')
+                return redirect('view_supplier')
             else:
                 messages.error(request, "Invalid login. Please try again.")
         except Account.DoesNotExist:
