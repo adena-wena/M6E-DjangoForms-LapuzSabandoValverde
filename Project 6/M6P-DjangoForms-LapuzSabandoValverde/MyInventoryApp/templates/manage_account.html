@@ -1,0 +1,32 @@
+
+{% extends 'tapasapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-8">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title"> Account Details:</h5>
+        </div>
+        <div class="card-body">
+
+            <h2> {{account.username}} </h2>
+            <p>
+                Password: {{account.password}}
+            </p>
+           
+            <p>
+                <a href="{%url 'change_password' account.pk %}"  class="btn btn-warning">Change Password</a>
+         
+                    <a href="{% url 'base' %}"  class="btn btn-success">Back</a>
+  
+                <a href="{%url 'delete_account' pk=account.pk %}"  class="btn btn-danger">Delete Account</a>
+
+            </p>
+            
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -77,6 +77,11 @@ def signup(request):
             return redirect('base')  
 
     return render(request, 'signup.html')
+
 def manage_account(request, pk):
     account = get_object_or_404(Account, pk=pk)
     return render(request, 'manage_account.html', {'account': account})
+
+def delete_account(request, pk ):
+    Account.objects.filter(pk=pk).delete()
+    return redirect('signup.html')
