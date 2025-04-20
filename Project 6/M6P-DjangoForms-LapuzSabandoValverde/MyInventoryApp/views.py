@@ -68,4 +68,12 @@ def signup(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        if User.objects.filter(username=username).exists():
+            messages.warning(request, 'Account already exists')
+            return render(request, 'signup.html')
+        else:
+            User.objects.create_user(username=username, password=password)
+            messages.success(request, 'Account created successfully')
+            return redirect('base')  
+
     return render(request, 'signup.html')
