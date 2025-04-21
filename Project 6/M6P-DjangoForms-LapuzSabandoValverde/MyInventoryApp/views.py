@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
-from django.contrib import messages # type: ignore
-from django.contrib.auth import authenticate, login # type: ignore
+from django.contrib import messages
 # Create your views here.
 
 
@@ -9,9 +8,10 @@ def view_supplier(request):
     supplier_objects = Supplier.objects.all()
     return render(request, 'MyInventoryApp/view_supplier.html', {'supplier' :supplier_objects})
 
-def view_bottles(request):
-    bottles_objects = WaterBottle.objects.all()
-    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles' :bottles_objects})
+def view_bottles(request, supplier_id):
+    supplier = Supplier.objects.get(id=supplier_id)
+    bottles = WaterBottle.objects.filter(supplier=supplier)
+    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles': bottles, 'supplier': supplier})
 
 def view_bottle_details(request, pk):
     b = get_object_or_404(WaterBottle, pk=pk)
@@ -40,7 +40,7 @@ def add_bottle(request):
             supplier=supplier,
             current_quantity=current_qty
         )        
-        return redirect('MyInventoryApp/view_bottles.html')
+        return redirect('MyInventoryApp/view_bottles')
     else:
         supplier_objects = Supplier.objects.all()
         return render(request, 'MyInventoryApp/add_bottle.html', {'supplier': supplier_objects})
@@ -49,54 +49,43 @@ def delete_bottle(request, pk):
     WaterBottle.objects.filter(pk=pk).delete()
     return redirect('view_bottles')
 
-def login(request):
+def login_view(request):
+    global id  
     if request.method == 'POST':
-        uname = request.POST.get('uname')
-        pword = request.POST.get('pword')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        try:
-            user = Account.objects.get(username=uname, password=pword)
-            if user.password == pword:
-                request.session['account_id'] = user.pk
-                return redirect('view_supplier')
+        try: 
+            account = Account.objects.get(username=username)
+            if account.getPassword() == password:
+                request.session['user.id'] = account.id
+                request.session['username'] = account.username
+                id = account.pk
+                return redirect ('view_supplier')
             else:
-                messages.error(request, "Invalid login. Please try again.")
+                messages.error(request, 'Invalid login')
         except Account.DoesNotExist:
-            messages.error(request, "Invalid login. Please try again.")
-        #     return redirect('MyInventoryApp/view_supplier.html')
-        # except Account.DoesNotExist:
-        #     messages.error(request, "Invalid login")
-        #     return render(request, 'MyInventoryApp/login.html')
-        # user = authenticate(request, username=username, password=password)
-
-        # if user is not None:
-        #     login(request, user)
-        #     return redirect('view_supplier') 
-        # else:
-        #     messages.error(request, 'Invalid login')
-        #     return render(request, 'base.html')  
+            messages.error(request, 'Invalid login')
 
     return render(request, 'MyInventoryApp/login.html')
 
-
 def signup(request):
     if request.method == 'POST':
-        uname = request.POST.get('uname')
-        pword = request.POST.get('pword')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        if Account.objects.filter(username=uname).exists():
-            messages.error(request, 'Account already exists')
-            
+        if Account.objects.filter(username=username).exists():
+            messages.warning(request, 'Account already exists')
         else:
-            Account.objects.create(username=uname, password=pword)
+            Account.objects.create(username=username, password=password)
             messages.success(request, 'Account created successfully')
-            return redirect('MyInventoryApp/base.html')  
+            return redirect('login')  
 
     return render(request, 'MyInventoryApp/signup.html')
 
 def manage_account(request, pk):
-    user = get_object_or_404(Account, pk=pk)
-    return render(request, 'MyInventoryApp/manage_account.html', {'user': user})
+    account = get_object_or_404(Account, pk=pk)
+    return render(request, 'MyInventoryApp/manage_account.html', {'account': account})
 
 def delete_account(request, pk ):
     Account.objects.filter(pk=pk).delete()
