@@ -17,6 +17,7 @@
           <p class="mb-1"><strong>Color:</strong> {{ b.color }}</p>
           <p class="mb-1"><strong>Supplier:</strong> {{ b.supplier }}</p>
           <p class="mb-3"><strong>In Stock:</strong> <span class="badge bg-success">{{ b.current_quantity }}</span></p>
+
           <a href="{% url 'view_bottle_details' pk=b.pk %}" class="btn btn-outline-primary w-100">View Details</a>
         </div>
       </div>

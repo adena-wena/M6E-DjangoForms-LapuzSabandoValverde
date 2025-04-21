@@ -40,7 +40,7 @@
 
           <div class="d-flex justify-content-between mt-4">
             <a href="{% url 'delete_bottle' pk=b.pk %}" class="btn btn-outline-danger w-45">Delete</a>
-            <a href="{% url 'view_bottles' supplier_id %}" class="btn btn-outline-secondary w-45">Back</a>
+            <a href="{% url 'view_bottles' supplier_id=supplier_id %}" class="btn btn-outline-secondary w-45">Back</a>
           </div>
         </div>
       </div>
