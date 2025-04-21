@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
@@ -9,9 +8,10 @@ def view_supplier(request):
     supplier_objects = Supplier.objects.all()
     return render(request, 'MyInventoryApp/view_supplier.html', {'supplier' :supplier_objects})
 
-def view_bottles(request):
-    bottles_objects = WaterBottle.objects.all()
-    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles' :bottles_objects})
+def view_bottles(request, supplier_id):
+    supplier = Supplier.objects.get(id=supplier_id)
+    bottles = WaterBottle.objects.filter(supplier=supplier)
+    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles': bottles, 'supplier': supplier})
 
 def view_bottle_details(request, pk):
     b = get_object_or_404(WaterBottle, pk=pk)
