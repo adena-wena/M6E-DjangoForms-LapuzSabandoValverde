@@ -67,7 +67,7 @@ def login_view(request):
             return redirect('view_supplier') 
         else:
             messages.error(request, 'Invalid login')
-            return render(request, 'MyInventoryApp/login.html')  
+            return render(request, 'login')  
 
     return render(request, 'MyInventoryApp/login.html')
 
