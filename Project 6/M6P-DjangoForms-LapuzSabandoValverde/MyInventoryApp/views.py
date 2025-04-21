@@ -83,7 +83,7 @@ def signup(request):
         else:
             Account.objects.create(username=uname, password=pword)
             messages.success(request, 'Account created successfully')
-            return redirect('MyInventoryApp/base.html')  
+            return redirect('MyInventoryApp/login.html')  
 
     return render(request, 'MyInventoryApp/signup.html')
 
