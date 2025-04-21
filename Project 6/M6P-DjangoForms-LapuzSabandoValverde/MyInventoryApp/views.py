@@ -54,22 +54,16 @@ def login_view(request):
         uname = request.POST.get('uname')
         pword = request.POST.get('pword')
 
-        try:
-            user = Account.objects.get(username=uname, password=pword)
-            return redirect('MyInventoryApp/view_supplier.html')
-        except Account.DoesNotExist:
-            messages.error(request, "Invalid login")
-            return render(request, 'MyInventoryApp/base.html')
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=uname, password=pword)
 
         if user is not None:
             login(request, user)
-            return redirect('view_supplier') 
+            return redirect('view_supplier')  
         else:
             messages.error(request, 'Invalid login')
-            return render(request, 'login')  
+            return render(request, 'MyInventoryApp/login.html')
 
-    return render(request, 'MyInventoryApp/login.html')
+    return render(request, 'MyInventoryApp/login.html') 
 
 
 def signup(request):
