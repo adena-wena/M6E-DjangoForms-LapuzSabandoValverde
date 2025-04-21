@@ -50,34 +50,36 @@ def delete_bottle(request, pk):
     return redirect('view_bottles')
 
 def login_view(request):
+    global id  
     if request.method == 'POST':
-        uname = request.POST.get('uname')
-        pword = request.POST.get('pword')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        user = authenticate(request, username=uname, password=pword)
-
-        if user is not None:
-            login(request, user)
-            return redirect('view_supplier')  
-        else:
+        try: 
+            account = Account.objects.get(username=username)
+            if account.getPassword() == password:
+                request.session['user.id'] = account.id
+                request.session['username'] = account.username
+                id = account.pk
+                return redirect ('view_supplier')
+            else:
+                messages.error(request, 'Invalid login')
+        except Account.DoesNotExist:
             messages.error(request, 'Invalid login')
-            return render(request, 'MyInventoryApp/login.html')
 
-    return render(request, 'MyInventoryApp/login.html') 
-
+    return render(request, 'MyInventoryApp/login.html')
 
 def signup(request):
     if request.method == 'POST':
-        uname = request.POST.get('uname')
-        pword = request.POST.get('pword')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        if Account.objects.filter(username=uname).exists():
-            messages.error(request, 'Account already exists')
-            
+        if Account.objects.filter(username=username).exists():
+            messages.warning(request, 'Account already exists')
         else:
-            Account.objects.create(username=uname, password=pword)
+            Account.objects.create(username=username, password=password)
             messages.success(request, 'Account created successfully')
-            return redirect('MyInventoryApp/login.html')  
+            return redirect('login')  
 
     return render(request, 'MyInventoryApp/signup.html')
 
