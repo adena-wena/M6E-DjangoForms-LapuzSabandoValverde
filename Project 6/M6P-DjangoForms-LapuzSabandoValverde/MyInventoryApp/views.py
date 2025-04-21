@@ -67,9 +67,9 @@ def base(request):
             return redirect('view_supplier') 
         else:
             messages.error(request, 'Invalid login')
-            return render(request, 'base.html')  
+            return render(request, 'login.html')  
 
-    return render(request, 'base.html')
+    return render(request, 'login.html')
 
 
 def signup(request):
