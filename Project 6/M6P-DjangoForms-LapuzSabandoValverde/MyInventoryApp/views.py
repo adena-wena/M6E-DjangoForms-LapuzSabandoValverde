@@ -61,9 +61,9 @@ def login_view(request):
         try: 
             account = Account.objects.get(username=username)
             if account.getPassword() == password:
-                request.session['user_id'] = account.pk
+                request.session['account_id'] = account.pk
                 request.session['username'] = account.username
-                id = account.pk
+                # id = account.pk
                 return redirect ('view_supplier')
             else:
                 messages.error(request, 'Invalid login')

@@ -21,7 +21,7 @@
                                    
                                     <p>
                                         {% if account %}
-                                            <a href="{%  %}"  class="btn btn-success">Manage</a>
+                                            <a href="{% url 'manage_account' pk=account.pk %}"  class="btn btn-success">Manage</a>
                                         {% endif %}
                                         <a href="{% url 'login' %}"  class="btn btn-danger">Logout</a>
                                         
