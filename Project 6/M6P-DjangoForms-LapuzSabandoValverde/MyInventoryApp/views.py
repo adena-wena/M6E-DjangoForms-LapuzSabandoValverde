@@ -49,7 +49,7 @@ def delete_bottle(request, pk):
     WaterBottle.objects.filter(pk=pk).delete()
     return redirect('view_bottles')
 
-def base(request):
+def login_view(request):
     if request.method == 'POST':
         uname = request.POST.get('uname')
         pword = request.POST.get('pword')
