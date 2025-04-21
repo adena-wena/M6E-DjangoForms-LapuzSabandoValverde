@@ -8,9 +8,15 @@ from django.contrib.auth.hashers import make_password, check_password
 
 def view_supplier(request):
     supplier_objects = Supplier.objects.all()
-    return render(request, 'MyInventoryApp/view_supplier.html', {'supplier' :supplier_objects})
 
+    account_id = request.session.get('user_id')
+    account = Account.objects.get(pk=account_id) if account_id else None
 
+    context = {
+        'supplier': supplier_objects,
+        'account': account
+    }
+    return render(request, 'MyInventoryApp/view_supplier.html', context)
 
 def view_bottles(request, supplier_id):
     supplier = Supplier.objects.get(id=supplier_id)
