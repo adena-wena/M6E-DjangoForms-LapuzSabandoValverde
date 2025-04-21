@@ -10,6 +10,8 @@ def view_supplier(request):
     supplier_objects = Supplier.objects.all()
     return render(request, 'MyInventoryApp/view_supplier.html', {'supplier' :supplier_objects})
 
+
+
 def view_bottles(request, supplier_id):
     supplier = Supplier.objects.get(id=supplier_id)
     bottles = WaterBottle.objects.filter(supplier=supplier)
@@ -18,8 +20,7 @@ def view_bottles(request, supplier_id):
 
 def view_bottle_details(request, pk):
     b = get_object_or_404(WaterBottle, pk=pk)
-    supplier_id = b.supplier.id
-    return render(request, 'MyInventoryApp/view_bottle_details.html', {'b': b, 'supplier_id': supplier_id})
+    return render(request, 'MyInventoryApp/view_bottle_details.html', {'b': b})
 
 def add_bottle(request):
     if request.method == "POST":
@@ -62,9 +63,9 @@ def login_view(request):
         try: 
             account = Account.objects.get(username=username)
             if account.getPassword() == password:
-                request.session['account_id'] = account.pk
+                request.session['user_id'] = account.pk
                 request.session['username'] = account.username
-                # id = account.pk
+                id = account.pk
                 return redirect ('view_supplier')
             else:
                 messages.error(request, 'Invalid login')
