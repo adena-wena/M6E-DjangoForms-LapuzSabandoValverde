@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.hashers import make_password, check_password
 # Create your views here.
 
 
@@ -103,13 +102,14 @@ def delete_account(request, pk ):
     return redirect('MyInventoryApp/signup.html')
 
 def change_password(request, pk):
-    account = get_object_or_404(Account, pk=pk)
+    account = Account.objects.get(pk=pk)
+    
     if request.method == 'POST':
         current = request.POST.get('current_password')
         new1 = request.POST.get('new_password')
         new2 = request.POST.get('confirm_password') 
 
-        if check_password not in(current, account.password):
+        if current != account.getPassword():  
             messages.error(request, 'Current password is incorrect.')
         elif new1 != new2:
             messages.error(request, 'New passwords do not match.')
@@ -118,4 +118,4 @@ def change_password(request, pk):
             account.save()
             return redirect('manage_account', pk=pk)
         
-        return render(request, 'tapasapp/change_password.html', {'account': account})
+    return render(request, 'MyInventoryApp/change_password.html', {'account': account})
