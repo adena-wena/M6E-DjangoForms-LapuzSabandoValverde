@@ -7,7 +7,7 @@
   </li>
   {% if account and account.pk %}
   <li class="nav-item">
-    <a class="nav-link me-2" href="{% url 'manage_account' account.pk %}">Manage Account</a>
+    <a class="nav-link me-2" href="{% url 'manage_account' request.user.pk %}">Manage Account</a>
   </li>
 {% else %}
   <!-- Optional: Show a fallback or nothing -->
