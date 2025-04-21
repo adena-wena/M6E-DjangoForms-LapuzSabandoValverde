@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password
 # Create your views here.
 
 
@@ -8,10 +10,9 @@ def view_supplier(request):
     supplier_objects = Supplier.objects.all()
     return render(request, 'MyInventoryApp/view_supplier.html', {'supplier' :supplier_objects})
 
-def view_bottles(request, supplier_id):
-    supplier = Supplier.objects.get(id=supplier_id)
-    bottles = WaterBottle.objects.filter(supplier=supplier)
-    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles': bottles, 'supplier': supplier})
+def view_bottles(request):
+    bottles_objects = WaterBottle.objects.all()
+    return render(request, 'MyInventoryApp/view_bottles.html', {'bottles' :bottles_objects})
 
 def view_bottle_details(request, pk):
     b = get_object_or_404(WaterBottle, pk=pk)
@@ -90,3 +91,21 @@ def manage_account(request, pk):
 def delete_account(request, pk ):
     Account.objects.filter(pk=pk).delete()
     return redirect('MyInventoryApp/signup.html')
+
+def change_password(request, pk):
+    account = get_object_or_404(Account, pk=pk)
+    if request.method == 'POST':
+        current = request.POST.get('current_password')
+        new1 = request.POST.get('new_password')
+        new2 = request.POST.get('confirm_password') 
+
+        if check_password not in(current, account.password):
+            messages.error(request, 'Current password is incorrect.')
+        elif new1 != new2:
+            messages.error(request, 'New passwords do not match.')
+        else:
+            account.password = new1
+            account.save()
+            return redirect('manage_account', pk=pk)
+        
+        return render(request, 'tapasapp/change_password.html', {'account': account})
