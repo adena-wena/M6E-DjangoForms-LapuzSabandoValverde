@@ -6,9 +6,6 @@
     <a class="nav-link me-2" href="{% url 'add_bottle' %}">Add Water Bottles</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link me-2" href="{% url 'manage_account' %}">Manage Account</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link me-2" href="{% url 'login' %}">Logout</a>
   </li>
 {% endblock %}
@@ -20,7 +17,7 @@
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for s in supplier %}
     <div class="col">
-      <a href="{% url 'view_bottles' %}" style="text-decoration: none; color: inherit;">
+      <a href="{% url 'view_bottles' s.id %}" style="text-decoration: none; color: inherit;">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
             <h5 class="card-title mb-2">{{ s.name }}</h5>
