@@ -69,8 +69,7 @@ def delete_bottle(request, pk):
     bottle.delete()
     return redirect('view_bottles', supplier_id=supplier_id)
 
-def login_view(request):
-    global id  
+def login_view(request): 
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -80,7 +79,6 @@ def login_view(request):
             if account.getPassword() == password:
                 request.session['user_id'] = account.pk
                 request.session['username'] = account.username
-                id = account.pk
                 return redirect ('view_supplier')
             else:
                 messages.error(request, 'Invalid login')
