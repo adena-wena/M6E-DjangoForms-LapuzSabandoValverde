@@ -26,7 +26,7 @@ def view_bottles(request, supplier_id):
 def view_bottle_details(request, pk):
     b = get_object_or_404(WaterBottle, pk=pk)
     supplier_id = b.supplier.id
-    return render(request, 'MyInventoryApp/view_bottle_details.html', {'b': b, 'supplier_id':supplier_id}) #passes supplier_id
+    return render(request, 'MyInventoryApp/view_bottle_details.html', {'b': b, 'supplier_id':supplier_id})
 
 def add_bottle(request):
     if request.method == "POST":
