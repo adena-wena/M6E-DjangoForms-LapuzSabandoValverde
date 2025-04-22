@@ -40,18 +40,6 @@ def add_bottle(request):
         current_qty = request.POST.get('current_qty')
 
         supplier = Supplier.objects.get(id=supplied_by)
-        def add_bottle(request):
-    if request.method == "POST":
-        sku = request.POST.get('sku')
-        brand = request.POST.get('brand')
-        cost = request.POST.get('cost')
-        size = request.POST.get('size')
-        mouth_size = request.POST.get('mouth_size')
-        color = request.POST.get('color')
-        supplied_by = request.POST.get('supplied_by')
-        current_qty = request.POST.get('current_qty')
-
-        supplier = Supplier.objects.get(id=supplied_by)
 
         if WaterBottle.objects.filter(sku=sku).exists():
             messages.error(request, f"A bottle with SKU '{sku}' already exists.")
