@@ -100,7 +100,7 @@ def manage_account(request, pk):
 
 def delete_account(request, pk ):
     Account.objects.filter(pk=pk).delete()
-    return redirect('MyInventoryApp/signup.html')
+    return redirect('login')
 
 def change_password(request, pk):
     account = Account.objects.get(pk=pk)
