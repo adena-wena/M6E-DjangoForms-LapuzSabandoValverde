@@ -16,7 +16,7 @@
                         {% endfor %}
                     {% endif %}
 
-                    <form method="POST" action="{% url 'add_bottle' %}">
+                    <form method="POST" action="{% url 'add_bottle/' %}">
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-md-3">
