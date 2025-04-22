@@ -10,6 +10,12 @@
                 <div class="card-body p-4">
                     <h4 class="card-title mb-4 fw-semibold">Add a New Bottle</h4>
 
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-warning text-center">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
                     <form method="POST" action="{% url 'add_bottle' %}">
                         {% csrf_token %}
                         <div class="row g-3">
