@@ -40,6 +40,23 @@ def add_bottle(request):
         current_qty = request.POST.get('current_qty')
 
         supplier = Supplier.objects.get(id=supplied_by)
+        def add_bottle(request):
+    if request.method == "POST":
+        sku = request.POST.get('sku')
+        brand = request.POST.get('brand')
+        cost = request.POST.get('cost')
+        size = request.POST.get('size')
+        mouth_size = request.POST.get('mouth_size')
+        color = request.POST.get('color')
+        supplied_by = request.POST.get('supplied_by')
+        current_qty = request.POST.get('current_qty')
+
+        supplier = Supplier.objects.get(id=supplied_by)
+
+        if WaterBottle.objects.filter(sku=sku).exists():
+            messages.error(request, f"A bottle with SKU '{sku}' already exists.")
+            supplier_objects = Supplier.objects.all()
+            return render(request, 'MyInventoryApp/add_bottle.html', {'supplier': supplier_objects})
 
         WaterBottle.objects.create(
             sku=sku,
@@ -51,14 +68,16 @@ def add_bottle(request):
             supplier=supplier,
             current_quantity=current_qty
         )        
-        return redirect('MyInventoryApp/view_bottles')
+        return redirect('view_bottles', supplier_id=supplier.id)
     else:
         supplier_objects = Supplier.objects.all()
         return render(request, 'MyInventoryApp/add_bottle.html', {'supplier': supplier_objects})
 
 def delete_bottle(request, pk):
-    WaterBottle.objects.filter(pk=pk).delete()
-    return redirect('view_bottles')
+    bottle = get_object_or_404(WaterBottle, pk=pk)
+    supplier_id = bottle.supplier.id  
+    bottle.delete()
+    return redirect('view_bottles', supplier_id=supplier_id)
 
 def login_view(request):
     global id  
