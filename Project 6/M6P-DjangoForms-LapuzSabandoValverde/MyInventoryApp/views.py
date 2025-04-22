@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from .models import WaterBottle, Supplier, Account
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
