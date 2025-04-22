@@ -3,10 +3,15 @@
 
 {% block navbar_buttons %}
   <li class="nav-item">
-    <a class="nav-link me-2" href="{% url 'add_bottle/' %}">Add Water Bottles</a>
+    <a class="nav-link me-2" href="{% url 'view_all_bottles' %}">Waterbottles</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link me-2" href="{% url 'add_bottle' %}">Add Water Bottles</a>
+  </li>
   <li class="nav-item">
     <a class="nav-link me-2" href="{% url 'manage_account' pk=account.pk %}">Manage Account</a>
   </li>
+  <li>
     <a class="nav-link me-2" href="{% url 'login' %}">Logout</a>
   </li>
 {% endblock %}
