@@ -22,6 +22,7 @@ urlpatterns = [
     path('', views.login_view, name='login'),  
     path('signup', views.signup, name='signup'),
     path('view_supplier', views.view_supplier, name='view_supplier'),
+    path('view_bottles/', views.view_all_bottles, name='view_all_bottles'),
     path('view_bottles/<int:supplier_id>/', views.view_bottles, name='view_bottles'),
     path('view_bottle_details/<int:pk>/', views.view_bottle_details, name= 'view_bottle_details'),
     path('delete_bottle/<int:pk>/', views.delete_bottle, name='delete_bottle'),
